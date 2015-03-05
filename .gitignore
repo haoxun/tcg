@@ -1,33 +1,41 @@
-ompiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# Emacs rope configuration
+.ropeproject
+.project
+.pydevproject
+.settings
 
-# Precompiled Headers
-*.gch
-*.pch
+# pyenv version file
+.python-version
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# Python
+*.py[co]
 
-# Fortran module files
-*.mod
+## Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+deb_dist
+develop-eggs
+.installed.cfg
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+## Installer logs
+pip-log.txt
 
-# Executables
-*.exe
-*.out
-*.app
+## Unit test / coverage reports
+.coverage
+.tox
 
-tags
-build/
-*.swp
-*.pyc
+## Translations
+*.mo
+
+## paver generated files
+/paver-minilib.zip
+
+# env.
+devpy2
