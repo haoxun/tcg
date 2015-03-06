@@ -261,6 +261,8 @@ setup_dict = dict(
         'pytest==2.5.1',
         'mock==1.0.1',
         'flake8==2.1.0',
+        # `tcg` customized.
+        'ply>=3.4',
     ],
     cmdclass={'test': TestAllCommand},
     zip_safe=False,  # don't use eggs
@@ -268,10 +270,6 @@ setup_dict = dict(
         'console_scripts': [
             'tcg = tcg.main:entry_point'
         ],
-        # if you have a gui, use this
-        # 'gui_scripts': [
-        #     'tcg_gui = tcg.gui:entry_point'
-        # ]
     }
 )
 
