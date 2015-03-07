@@ -38,7 +38,7 @@ sys.path.append('.')
 CODE_DIRECTORY = 'tcg'
 DOCS_DIRECTORY = 'docs'
 TESTS_DIRECTORY = 'tests'
-PYTEST_FLAGS = ['--doctest-modules']
+PYTEST_FLAGS = []
 
 # Import metadata. Normally this would just be:
 #
