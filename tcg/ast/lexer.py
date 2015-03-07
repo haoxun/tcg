@@ -1,10 +1,11 @@
 
 from __future__ import print_function
 
+import os
 from ply.lex import TOKEN, lex
 
 
-__all__ = ['create_lexer']
+__all__ = ['create_lexer', 'tokens']
 
 
 keyworks = {'BEGIN', 'END', 'INPUT', 'OUTPUT'}
@@ -138,4 +139,9 @@ def t_error(t):
 
 
 def create_lexer():
-    return lex()
+    return lex(
+        debug=0,
+        optimize=1,
+        lextab="generated_lextab",
+        outputdir=os.path.dirname(__file__),
+    )

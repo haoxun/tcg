@@ -166,8 +166,10 @@ def _lint():
     # Python 3 compat:
     # - The result of subprocess call outputs are byte strings, meaning we need
     #   to pass a byte string to endswith.
+    is_py_file = lambda x: (x.endswith(b'.py') and
+                            not os.path.basename(x).startswith(b'generated'))
     project_python_files = [filename for filename in get_project_files()
-                            if filename.endswith(b'.py')]
+                            if is_py_file(filename)]
     retcode = subprocess.call(
         ['flake8', '--max-complexity=10'] + project_python_files)
     if retcode == 0:
@@ -263,6 +265,7 @@ setup_dict = dict(
         'flake8==2.1.0',
         # `tcg` customized.
         'ply>=3.4',
+        'six',
     ],
     cmdclass={'test': TestAllCommand},
     zip_safe=False,  # don't use eggs

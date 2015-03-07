@@ -37,5 +37,7 @@ pip-log.txt
 ## paver generated files
 /paver-minilib.zip
 
-# env.
+# tcg customized.
 devpy2
+generated_*
+*.swp
