@@ -171,7 +171,7 @@ def _lint():
     project_python_files = [filename for filename in get_project_files()
                             if is_py_file(filename)]
     retcode = subprocess.call(
-        ['flake8', '--max-complexity=10'] + project_python_files)
+        ['pep8'] + project_python_files)
     if retcode == 0:
         print_success_message('No style errors')
     return retcode
@@ -262,7 +262,6 @@ setup_dict = dict(
     tests_require=[
         'pytest==2.5.1',
         'mock==1.0.1',
-        'flake8==2.1.0',
         # `tcg` customized.
         'ply>=3.4',
         'six',

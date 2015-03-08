@@ -1,4 +1,4 @@
-
+from __future__ import unicode_literals
 from __future__ import print_function
 
 import os
@@ -26,9 +26,6 @@ tokens = [
     'R_BRACKET',
     'L_BRACE',
     'R_BRACE',
-    # special.
-    'COMMENT',
-    'WHITESPACE',
 ]
 
 tokens = tokens + list(keyworks)

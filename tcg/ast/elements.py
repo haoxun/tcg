@@ -1,62 +1,75 @@
-
-import six
+from __future__ import unicode_literals
+import functools
+from six import string_types, with_metaclass
 
 
 class InitInjector(type):
+
     def __new__(cls, *args, **kwargs):
         generated_cls = type.__new__(cls, *args, **kwargs)
 
-        # inject __init__.
-        def init(self, value):
-            value_type = getattr(generated_cls, '_value_type', None)
+        def _init(self, value):
+            value_type = getattr(generated_cls, 'value_type', None)
             if value_type is None or isinstance(value, value_type):
                 self.value = value
             else:
-                raise Exception("InitInjector: wrong type.")
+                raise RuntimeError("InitInjector: wrong init type.")
 
-        if '__init__' not in generated_cls.__dict__:
-            generated_cls.__init__ = init
-        return generated_cls
+        def _repr(self):
+            return repr(self.value)
 
+        def _eq(self, other):
+            return type(self) == type(other) and self.value == other.value
 
-class ID(object):
-    __metaclass__ = InitInjector
-    _value_type = six.string_types
+        def _gt(self, other):
+            return self.value > other.value
 
+        def _hash(self):
+            return hash(self.value)
 
-class LongString(object):
-    __metaclass__ = InitInjector
-    _value_type = six.string_types
+        def inject_method(generated_cls, text, func):
+            if text not in generated_cls.__dict__:
+                setattr(generated_cls, text, func)
 
+        inject_method(generated_cls, '__init__', _init)
+        inject_method(generated_cls, '__repr__', _repr)
+        inject_method(generated_cls, '__eq__', _eq)
+        inject_method(generated_cls, '__gt__', _gt)
+        inject_method(generated_cls, '__hash__', _hash)
 
-class ShortString(object):
-    __metaclass__ = InitInjector
-    _value_type = six.string_types
-
-
-class Integer(object):
-    __metaclass__ = InitInjector
-    _value_type = int
-
-
-class Float(object):
-    __metaclass__ = InitInjector
-    _value_type = float
+        return functools.total_ordering(generated_cls)
 
 
-class Boolean(object):
-    __metaclass__ = InitInjector
-    _value_type = bool
+class ID(with_metaclass(InitInjector)):
+    value_type = string_types
 
 
-class List(object):
-    __metaclass__ = InitInjector
-    _value_type = list
+class LongString(with_metaclass(InitInjector)):
+    value_type = string_types
 
 
-class Dict(object):
-    __metaclass__ = InitInjector
-    _value_type = dict
+class ShortString(with_metaclass(InitInjector)):
+    value_type = string_types
+
+
+class Integer(with_metaclass(InitInjector)):
+    value_type = int
+
+
+class Float(with_metaclass(InitInjector)):
+    value_type = float
+
+
+class Boolean(with_metaclass(InitInjector)):
+    value_type = bool
+
+
+class List(with_metaclass(InitInjector)):
+    value_type = list
+
+
+class Dict(with_metaclass(InitInjector)):
+    value_type = dict
 
 
 class TestCase(object):
@@ -64,3 +77,11 @@ class TestCase(object):
         self.id = id
         self.input_value = input_value
         self.output_value = output_value
+
+    def __repr__(self):
+        template = (b'<ID: {0},'
+                    b' Input: {1},'
+                    b' Output: {2}>')
+        return template.format(
+            repr(self.id), repr(self.input_value), repr(self.output_value),
+        )
