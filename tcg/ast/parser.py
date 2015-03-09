@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+from __future__ import absolute_import, division, print_function
 import os
 from ply.yacc import yacc
 from .lexer import tokens as lexer_tokens

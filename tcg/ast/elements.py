@@ -1,9 +1,10 @@
-from __future__ import unicode_literals
+from __future__ import absolute_import, division, print_function
+
 import functools
 from six import string_types, with_metaclass
 
 
-class InitInjector(type):
+class MethodsInjector(type):
 
     def __new__(cls, *args, **kwargs):
         generated_cls = type.__new__(cls, *args, **kwargs)
@@ -13,7 +14,7 @@ class InitInjector(type):
             if value_type is None or isinstance(value, value_type):
                 self.value = value
             else:
-                raise RuntimeError("InitInjector: wrong init type.")
+                raise RuntimeError("MethodsInjector: wrong init type.")
 
         def _repr(self):
             return repr(self.value)
@@ -40,35 +41,35 @@ class InitInjector(type):
         return functools.total_ordering(generated_cls)
 
 
-class ID(with_metaclass(InitInjector)):
+class ID(with_metaclass(MethodsInjector)):
     value_type = string_types
 
 
-class LongString(with_metaclass(InitInjector)):
+class LongString(with_metaclass(MethodsInjector)):
     value_type = string_types
 
 
-class ShortString(with_metaclass(InitInjector)):
+class ShortString(with_metaclass(MethodsInjector)):
     value_type = string_types
 
 
-class Integer(with_metaclass(InitInjector)):
+class Integer(with_metaclass(MethodsInjector)):
     value_type = int
 
 
-class Float(with_metaclass(InitInjector)):
+class Float(with_metaclass(MethodsInjector)):
     value_type = float
 
 
-class Boolean(with_metaclass(InitInjector)):
+class Boolean(with_metaclass(MethodsInjector)):
     value_type = bool
 
 
-class List(with_metaclass(InitInjector)):
+class List(with_metaclass(MethodsInjector)):
     value_type = list
 
 
-class Dict(with_metaclass(InitInjector)):
+class Dict(with_metaclass(MethodsInjector)):
     value_type = dict
 
 
