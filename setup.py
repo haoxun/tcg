@@ -245,11 +245,8 @@ setup_dict = dict(
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: Implementation :: PyPy',
-        'Topic :: Documentation',
+        'Programming Language :: Python :: 3.4',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: System :: Installation/Setup',
         'Topic :: System :: Software Distribution',
@@ -265,6 +262,7 @@ setup_dict = dict(
         # `tcg` customized.
         'ply>=3.4',
         'six',
+        'future',
     ],
     cmdclass={'test': TestAllCommand},
     zip_safe=False,  # don't use eggs
